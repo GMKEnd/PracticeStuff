@@ -3,4 +3,9 @@
     <string name="image_item">image_item</string>
     <string name="item_test">item test</string>
     <string name="return_to_top">回到顶部</string>
+    <string name="pic">picture</string>
+    <string name="header">Header</string>
+    <string name="footer">Footer</string>
+    <string name="add_footer">添加尾部</string>
+    <string name="add_header">添加头部</string>
 </resources>

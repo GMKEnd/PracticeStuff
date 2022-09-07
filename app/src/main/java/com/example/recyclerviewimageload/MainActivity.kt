@@ -24,31 +24,44 @@ class MainActivity : AppCompatActivity() {
             testList.add((i + 1).toString())
         }
         mRecyclerView = findViewById(R.id.recycler_view)
-        mAdapter = Adapter(testList)
+        mAdapter = Adapter(testList, this)
 
         initRV()
 
-        val btn: Button = findViewById(R.id.to_top)
-        btn.setOnClickListener {
+        val toTopBtn: Button = findViewById(R.id.to_top)
+        toTopBtn.setOnClickListener {
             mRecyclerView.smoothScrollToPosition(0)
+        }
+
+        val addHeaderBtn: Button = findViewById(R.id.add_header)
+        addHeaderBtn.setOnClickListener {
+            mAdapter.addHeader()
+            testList.add(0, "header")
+            mAdapter.notifyItemInserted(0)
+        }
+        val addFooterBtn: Button = findViewById(R.id.add_footer)
+        addFooterBtn.setOnClickListener {
+            mAdapter.addFooter()
+            testList.add("footer")
+            mAdapter.notifyItemInserted(testList.size - 1)
         }
     }
 
     private fun initRV() {
         mRecyclerView.adapter = mAdapter
         mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+/*            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager?
                 if (!isLoading) {
                     // 检测发生滑动，最后一个完全可见的元素的位置是否为列表末尾
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == testList.size - 1) {
-                        Log.i("scroll!!", "endreached!")
+                        Log.i("scroll!!", "end reached!")
                         load()
                         isLoading = true
                     }
                 }
-            }
+            }*/
         })
     }
 
@@ -67,10 +80,10 @@ class MainActivity : AppCompatActivity() {
             testList.removeAt(testList.size - 1)
             val currentPosition: Int = testList.size
             mAdapter.notifyItemRemoved(currentPosition)
-
+            // 来回加载文字/图片
             lastText = if (lastText) {
                 for (i in 0..9) {
-                    testList.add("picture")
+                    testList.add(getString(R.string.pic))
                 }
                 false
             } else {
