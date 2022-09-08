@@ -140,8 +140,24 @@ class Adapter(private val testList: List<String?>, context: Context) : RecyclerV
         headerCount ++
     }
 
+    fun removeHeader() {
+        headerCount --
+    }
+
+    fun getHeaderCount(): Int {
+        return headerCount
+    }
+
     fun addFooter() {
         footerCount ++
+    }
+
+    fun removeFooter() {
+        footerCount --
+    }
+
+    fun getFooterCount(): Int {
+        return footerCount
     }
 
     private fun isHeaderPos(position: Int): Boolean {

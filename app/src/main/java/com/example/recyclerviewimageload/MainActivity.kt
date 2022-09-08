@@ -25,25 +25,48 @@ class MainActivity : AppCompatActivity() {
         }
         mRecyclerView = findViewById(R.id.recycler_view)
         mAdapter = Adapter(testList, this)
-
+        // 初始化RV，添加OnScrollListener
         initRV()
-
+        // 移到顶部
         val toTopBtn: Button = findViewById(R.id.to_top)
         toTopBtn.setOnClickListener {
             mRecyclerView.smoothScrollToPosition(0)
         }
-
+        // 添加头部
         val addHeaderBtn: Button = findViewById(R.id.add_header)
         addHeaderBtn.setOnClickListener {
             mAdapter.addHeader()
             testList.add(0, "header")
             mAdapter.notifyItemInserted(0)
         }
+        // 移除头部
+        val removeHeaderBtn: Button = findViewById(R.id.remove_header)
+        removeHeaderBtn.setOnClickListener {
+            if (mAdapter.getHeaderCount() == 0) {
+                Log.i("removeHeader", "failed, there is none")
+            } else {
+                mAdapter.removeHeader()
+                testList.removeAt(0)
+                mAdapter.notifyItemRemoved(0)
+            }
+        }
+        // 添加尾部
         val addFooterBtn: Button = findViewById(R.id.add_footer)
         addFooterBtn.setOnClickListener {
             mAdapter.addFooter()
             testList.add("footer")
             mAdapter.notifyItemInserted(testList.size - 1)
+        }
+        // 移除尾部
+        val removeFooterBtn: Button = findViewById(R.id.remove_footer)
+        removeFooterBtn.setOnClickListener {
+            if (mAdapter.getFooterCount() == 0) {
+                Log.i("removeFooter", "failed, there is none")
+            } else {
+                mAdapter.removeFooter()
+                testList.removeAt(testList.size - 1)
+                mAdapter.notifyItemRemoved(testList.size - 1)
+            }
         }
     }
 

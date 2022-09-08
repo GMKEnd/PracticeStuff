@@ -31,13 +31,23 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/add_footer"
+        android:id="@+id/remove_footer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:text="@string/add_footer"
+        android:text="@string/remove_footer"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/add_footer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/add_footer"
+        app:layout_constraintBottom_toTopOf="@+id/remove_footer"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
@@ -47,6 +57,16 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:text="@string/add_header"
+        app:layout_constraintBottom_toTopOf="@+id/remove_header"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/remove_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/remove_header"
         app:layout_constraintBottom_toTopOf="@+id/add_footer"
         app:layout_constraintEnd_toEndOf="parent" />
 
