@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 mAdapter.removeFooter()
                 testList.removeAt(testList.size - 1)
-                mAdapter.notifyItemRemoved(testList.size - 1)
+                mAdapter.notifyItemRemoved(testList.size)
             }
         }
     }
