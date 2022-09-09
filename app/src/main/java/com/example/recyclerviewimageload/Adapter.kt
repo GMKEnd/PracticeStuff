@@ -21,53 +21,12 @@ class Adapter(private val testList: List<String?>, context: Context) : RecyclerV
     val TYPE_HEADER = 10
     val TYPE_FOOTER = 20
 
+    val headerList = mutableListOf<String>()
+    val footerList = mutableListOf<String>()
+
     companion object {
         var headerCount = 0
         var footerCount = 0
-    }
-
-    class ImageViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        private val imageView: ImageView = itemView.findViewById(R.id.image_item)
-
-        fun bind(position: Int) {
-            if (position % 2 == 0) {
-                imageView.setImageResource(R.drawable.edited)
-            } else if (position % 3 == 0) {
-                imageView.setImageResource(R.drawable.unknown)
-            } else {
-                imageView.setImageResource(R.drawable._749_png_300)
-            }
-        }
-    }
-
-    class TextViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        private val textView: TextView = itemView.findViewById(R.id.text_item)
-
-        fun bind (text: String) {
-            textView.text = text
-        }
-    }
-
-    class LoadViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        private val progressbar: ProgressBar = itemView.findViewById(R.id.progressBar)
-
-        fun bind() {
-            progressbar.alpha = 0.5f
-        }
-    }
-
-    class HeaderViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        private val textView: TextView = itemView.findViewById(R.id.header_title)
-        fun bind() {
-            textView.text = headerCount.toString()
-        }
-    }
-
-    class FooterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        private val textView: TextView = itemView.findViewById(R.id.footer_title)
-        fun bind() {
-            textView.text = footerCount.toString()
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -125,6 +84,7 @@ class Adapter(private val testList: List<String?>, context: Context) : RecyclerV
             return TYPE_HEADER
         }
         if (isFooterPos(position)) {
+            Log.i("test", "is footer")
             return TYPE_FOOTER
         }
 
@@ -138,49 +98,85 @@ class Adapter(private val testList: List<String?>, context: Context) : RecyclerV
 
     fun addHeader() {
         headerCount ++
+        headerList.add("header")
     }
 
     fun removeHeader() {
         headerCount --
+        headerList.removeLast()
     }
 
     fun getHeaderCount(): Int {
-        return headerCount
+        return headerList.size
     }
 
     fun addFooter() {
         footerCount ++
+        footerList.add("footer")
     }
 
     fun removeFooter() {
         footerCount --
+        footerList.removeLast()
     }
 
     fun getFooterCount(): Int {
-        return footerCount
+        return footerList.size
     }
 
     private fun isHeaderPos(position: Int): Boolean {
-        if (headerCount == 0) {
-            return false
-        }
-        if (position < headerCount) {
-            return true
-        }
-        return false
+        return position < headerList.size
     }
 
     private fun isFooterPos(position: Int): Boolean {
-        if (footerCount == 0) {
-            return false
-        }
-        if (position > testList.size - footerCount - 1) {
-            return true
-        }
-        return false
+        return position > mItemList.size + headerList.size - 1
     }
 
     override fun getItemCount(): Int {
-        return mItemList.size
+        return mItemList.size + headerList.size + footerList.size
+    }
+
+    class ImageViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        private val imageView: ImageView = itemView.findViewById(R.id.image_item)
+
+        fun bind(position: Int) {
+            if (position % 2 == 0) {
+                imageView.setImageResource(R.drawable.edited)
+            } else if (position % 3 == 0) {
+                imageView.setImageResource(R.drawable.unknown)
+            } else {
+                imageView.setImageResource(R.drawable._749_png_300)
+            }
+        }
+    }
+
+    class TextViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        private val textView: TextView = itemView.findViewById(R.id.text_item)
+
+        fun bind (text: String) {
+            textView.text = text
+        }
+    }
+
+    class LoadViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        private val progressbar: ProgressBar = itemView.findViewById(R.id.progressBar)
+
+        fun bind() {
+            progressbar.alpha = 0.5f
+        }
+    }
+
+    class HeaderViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        private val textView: TextView = itemView.findViewById(R.id.header_title)
+        fun bind() {
+            textView.text = headerCount.toString()
+        }
+    }
+
+    class FooterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        private val textView: TextView = itemView.findViewById(R.id.footer_title)
+        fun bind() {
+            textView.text = footerCount.toString()
+        }
     }
 }

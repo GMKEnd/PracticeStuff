@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,10 @@ class MainActivity : AppCompatActivity() {
     var testList = mutableListOf<String?>()
     var isLoading = false
     var lastText = true
+
+    companion object {
+        var mToast: Toast? = null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,17 +41,20 @@ class MainActivity : AppCompatActivity() {
         val addHeaderBtn: Button = findViewById(R.id.add_header)
         addHeaderBtn.setOnClickListener {
             mAdapter.addHeader()
-            testList.add(0, "header")
+//            testList.add(0, "header")
             mAdapter.notifyItemInserted(0)
+            mRecyclerView.layoutManager?.scrollToPosition(0)
         }
         // 移除头部
         val removeHeaderBtn: Button = findViewById(R.id.remove_header)
         removeHeaderBtn.setOnClickListener {
             if (mAdapter.getHeaderCount() == 0) {
                 Log.i("removeHeader", "failed, there is none")
+                val toastText = getString(R.string.no_header)
+                displayToast(toastText)
             } else {
                 mAdapter.removeHeader()
-                testList.removeAt(0)
+//                testList.removeAt(0)
                 mAdapter.notifyItemRemoved(0)
             }
         }
@@ -54,20 +62,31 @@ class MainActivity : AppCompatActivity() {
         val addFooterBtn: Button = findViewById(R.id.add_footer)
         addFooterBtn.setOnClickListener {
             mAdapter.addFooter()
-            testList.add("footer")
-            mAdapter.notifyItemInserted(testList.size - 1)
+//            testList.add("footer")
+            mAdapter.notifyItemInserted(mAdapter.itemCount - 1)
+            mRecyclerView.layoutManager?.scrollToPosition(mAdapter.itemCount - 1)
         }
         // 移除尾部
         val removeFooterBtn: Button = findViewById(R.id.remove_footer)
         removeFooterBtn.setOnClickListener {
             if (mAdapter.getFooterCount() == 0) {
                 Log.i("removeFooter", "failed, there is none")
+                val toastText = getString(R.string.no_footer)
+                displayToast(toastText)
             } else {
                 mAdapter.removeFooter()
-                testList.removeAt(testList.size - 1)
-                mAdapter.notifyItemRemoved(testList.size)
+//                testList.removeAt(testList.size - 1)
+                mAdapter.notifyItemRemoved(mAdapter.itemCount)
             }
         }
+    }
+
+    private fun displayToast(text: String) {
+        if (mToast != null) {
+            mToast!!.cancel()
+        }
+        mToast = Toast.makeText(this, text, Toast.LENGTH_SHORT)
+        mToast!!.show()
     }
 
     private fun initRV() {
