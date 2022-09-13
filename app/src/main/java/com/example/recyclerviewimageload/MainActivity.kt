@@ -8,6 +8,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import kotlinx.coroutines.delay
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,11 +27,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val swipeRefresh: SwipeRefreshLayout = findViewById(R.id.swipe_refresh)
+        swipeRefresh.setColorSchemeResources(R.color.purple_200, R.color.teal_200, R.color.black)
+        swipeRefresh.setOnRefreshListener {
+            val handler = Handler()
+            handler.postDelayed({
+                testList.add(0, "new")
+                mAdapter.notifyItemInserted(mAdapter.getHeaderCount())
+                swipeRefresh.isRefreshing = false
+            }, 1000)
+        }
+
         for (i in 0..9) {
             testList.add((i + 1).toString())
         }
         mRecyclerView = findViewById(R.id.recycler_view)
         mAdapter = Adapter(testList, this)
+
+        mAdapter.addHeader(true)
+        mAdapter.addHeader(true)
+
         // 初始化RV，添加OnScrollListener
         initRV()
         // 移到顶部
@@ -89,21 +106,39 @@ class MainActivity : AppCompatActivity() {
         mToast!!.show()
     }
 
+    private fun initRV_scrollLoad() {
+        mRecyclerView.adapter = mAdapter
+        mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager?
+                /*if (!isLoading) {
+                    // 检测发生滑动，最后一个完全可见的元素的位置是否为列表末尾
+                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == testList.size - 1 + mAdapter.getHeaderCount()) {
+                        Log.i("scroll!!", "end reached!")
+                        load()
+                        isLoading = true
+                    }
+                }*/
+            }
+        })
+    }
+
     private fun initRV() {
         mRecyclerView.adapter = mAdapter
         mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-/*            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager?
                 if (!isLoading) {
                     // 检测发生滑动，最后一个完全可见的元素的位置是否为列表末尾
-                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == testList.size - 1) {
+                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == testList.size - 1 + mAdapter.getHeaderCount()) {
                         Log.i("scroll!!", "end reached!")
                         load()
                         isLoading = true
                     }
                 }
-            }*/
+            }
         })
     }
 
@@ -111,16 +146,16 @@ class MainActivity : AppCompatActivity() {
         Log.i("loadstat", "$isLoading")
         // 添加一个空值，在Adapter内会归类于加载view
         testList.add(null)
-        mAdapter.notifyItemInserted(testList.size - 1)
+        mAdapter.notifyItemInserted(testList.size - 1  + mAdapter.getHeaderCount())
         // 移动屏幕到能显示加载的位置
-        mRecyclerView.layoutManager?.scrollToPosition(testList.size - 1)
+        mRecyclerView.layoutManager?.scrollToPosition(testList.size - 1 + mAdapter.getHeaderCount())
 
         // 使用Handler不断循环执行
         val handler = Handler()
         handler.postDelayed({
             // 移除加载Item
             testList.removeAt(testList.size - 1)
-            val currentPosition: Int = testList.size
+            val currentPosition: Int = testList.size + mAdapter.getHeaderCount()
             mAdapter.notifyItemRemoved(currentPosition)
             // 来回加载文字/图片
             lastText = if (lastText) {

@@ -43,6 +43,7 @@ class Adapter(private val testList: List<String?>, context: Context) : RecyclerV
             TYPE_HEADER -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.header_view, parent, false)
+
                 HeaderViewHolder(view) }
             TYPE_FOOTER -> {
                 val view = LayoutInflater.from(parent.context)
@@ -60,17 +61,17 @@ class Adapter(private val testList: List<String?>, context: Context) : RecyclerV
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ImageViewHolder -> {
-                testList[position]?.let { holder.bind(position) }
+                holder.bind(position)
             }
             is TextViewHolder -> {
-                testList[position]?.let { holder.bind(it) }
+                holder.bind(position.toString())
             }
             is LoadViewHolder -> {
                 holder.bind()
             }
             // header & footer
             is HeaderViewHolder -> {
-                holder.bind()
+                holder.bind(position)
             }
             is FooterViewHolder -> {
                 holder.bind()
@@ -84,11 +85,10 @@ class Adapter(private val testList: List<String?>, context: Context) : RecyclerV
             return TYPE_HEADER
         }
         if (isFooterPos(position)) {
-            Log.i("test", "is footer")
             return TYPE_FOOTER
         }
 
-        return when (testList[position]) {
+        return when (testList[position - headerList.size]) {
             // 检测是否需要替换成加载界面
             null -> TYPE_ITEM_LOADING
             mContext.getString(R.string.pic) -> TYPE_ITEM_IMAGE
@@ -96,9 +96,14 @@ class Adapter(private val testList: List<String?>, context: Context) : RecyclerV
         }
     }
 
-    fun addHeader() {
-        headerCount ++
-        headerList.add("header")
+    fun addHeader(init: Boolean = false) {
+        if (init) {
+            headerCount ++
+            headerList.add("starter")
+        } else {
+            headerCount ++
+            headerList.add("header")
+        }
     }
 
     fun removeHeader() {
@@ -168,8 +173,8 @@ class Adapter(private val testList: List<String?>, context: Context) : RecyclerV
 
     class HeaderViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         private val textView: TextView = itemView.findViewById(R.id.header_title)
-        fun bind() {
-            textView.text = headerCount.toString()
+        fun bind(position: Int) {
+            textView.text = position.toString()
         }
     }
 
