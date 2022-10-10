@@ -24,11 +24,6 @@ class Adapter(private val testList: List<String?>, context: Context) : RecyclerV
     val headerList = mutableListOf<String>()
     val footerList = mutableListOf<String>()
 
-    companion object {
-        var headerCount = 0
-        var footerCount = 0
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_ITEM_TEXT -> {
@@ -74,7 +69,7 @@ class Adapter(private val testList: List<String?>, context: Context) : RecyclerV
                 holder.bind(position)
             }
             is FooterViewHolder -> {
-                holder.bind()
+                holder.bind(footerList[position - testList.size - headerList.size])
             }
         }
     }
@@ -98,16 +93,13 @@ class Adapter(private val testList: List<String?>, context: Context) : RecyclerV
 
     fun addHeader(init: Boolean = false) {
         if (init) {
-            headerCount ++
             headerList.add("starter")
         } else {
-            headerCount ++
             headerList.add("header")
         }
     }
 
     fun removeHeader() {
-        headerCount --
         headerList.removeLast()
     }
 
@@ -115,13 +107,11 @@ class Adapter(private val testList: List<String?>, context: Context) : RecyclerV
         return headerList.size
     }
 
-    fun addFooter() {
-        footerCount ++
-        footerList.add("footer")
+    fun addFooter(text: String = "footer") {
+        footerList.add(text)
     }
 
     fun removeFooter() {
-        footerCount --
         footerList.removeLast()
     }
 
@@ -180,8 +170,8 @@ class Adapter(private val testList: List<String?>, context: Context) : RecyclerV
 
     class FooterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         private val textView: TextView = itemView.findViewById(R.id.footer_title)
-        fun bind() {
-            textView.text = footerCount.toString()
+        fun bind(text: String) {
+            textView.text = text
         }
     }
 }

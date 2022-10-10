@@ -3,6 +3,8 @@ package com.example.recyclerviewimageload
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.MotionEvent
+import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -48,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         mAdapter.addHeader(true)
 
         // 初始化RV，添加OnScrollListener
-        initRV()
+        initRV_scrollLoad()
         // 移到顶部
         val toTopBtn: Button = findViewById(R.id.to_top)
         toTopBtn.setOnClickListener {
@@ -107,19 +109,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRV_scrollLoad() {
+        var refreshReady = false
         mRecyclerView.adapter = mAdapter
         mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager?
-                /*if (!isLoading) {
+                if (!isLoading) {
                     // 检测发生滑动，最后一个完全可见的元素的位置是否为列表末尾
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == testList.size - 1 + mAdapter.getHeaderCount()) {
-                        Log.i("scroll!!", "end reached!")
-                        load()
-                        isLoading = true
+                        mAdapter.addFooter("上拉加载更多")
+                        mAdapter.notifyItemInserted(testList.size - 1  + mAdapter.getHeaderCount())
+                        // 移动屏幕到能显示加载的位置
+                        mRecyclerView.layoutManager?.scrollToPosition(testList.size - 1 + mAdapter.getHeaderCount())
+                        refreshReady = true
+//                        pullToLoad()
                     }
-                }*/
+                }
+            }
+        })
+    }
+
+    fun pullToLoad() {
+        mRecyclerView.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(view: View?, event: MotionEvent?): Boolean {
+                return true
             }
         })
     }
