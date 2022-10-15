@@ -1,4 +1,8 @@
 # RecyclerViewImageLoad
+
+2022.10.12：新增可拖动的回到顶部图标
+
+
 此项目已实现
 
 1.RecyclerView 向下滑动到末尾时加载新的元素，当前TextView与ImageView反复加载 
