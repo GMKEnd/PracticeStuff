@@ -13,4 +13,7 @@
     <string name="no_header">There ain\'t any header</string>
     <string name="no_footer">There ain\'t any footer</string>
     <string name="release_to_refresh">释放立即刷新</string>
+    <string name="xxx">xxx</string>
+    <string name="add1">加一</string>
+    <string name="minus1">减一</string>
 </resources>

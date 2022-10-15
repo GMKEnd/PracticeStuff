@@ -50,9 +50,9 @@ class MainActivity : AppCompatActivity() {
         mAdapter.addHeader(true)
 
         // 初始化RV，添加OnScrollListener
-        initRV_scrollLoad()
+        initRVScrollLoad()
         // 移到顶部
-        val toTopBtn: Button = findViewById(R.id.to_top)
+        val toTopBtn:Button = findViewById(R.id.to_top)
         toTopBtn.setOnClickListener {
             mRecyclerView.smoothScrollToPosition(0)
         }
@@ -98,7 +98,14 @@ class MainActivity : AppCompatActivity() {
                 mAdapter.notifyItemRemoved(mAdapter.itemCount)
             }
         }
+
+        val eee:DragFloatActionButton = findViewById(R.id.eee)
+        eee.setOnClickListener{
+            mRecyclerView.smoothScrollToPosition(0)
+        }
     }
+
+
 
     private fun displayToast(text: String) {
         if (mToast != null) {
@@ -108,7 +115,7 @@ class MainActivity : AppCompatActivity() {
         mToast!!.show()
     }
 
-    private fun initRV_scrollLoad() {
+    private fun initRVScrollLoad() {
         var refreshReady = false
         mRecyclerView.adapter = mAdapter
         mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
