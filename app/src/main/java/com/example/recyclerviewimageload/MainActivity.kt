@@ -11,7 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import kotlinx.coroutines.delay
+import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,6 +30,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        fragmentInit()
+
+        // 初始化RV，添加OnScrollListener
+//        rvInit()
+//        initRVScrollLoad()
+//        btnInit()
+    }
+
+    private fun rvInit() {
         val swipeRefresh: SwipeRefreshLayout = findViewById(R.id.swipe_refresh)
         swipeRefresh.setColorSchemeResources(R.color.purple_200, R.color.teal_200, R.color.black)
         swipeRefresh.setOnRefreshListener {
@@ -49,8 +59,9 @@ class MainActivity : AppCompatActivity() {
         mAdapter.addHeader(true)
         mAdapter.addHeader(true)
 
-        // 初始化RV，添加OnScrollListener
-        initRVScrollLoad()
+    }
+
+    private fun btnInit() {
         // 移到顶部
         val toTopBtn:Button = findViewById(R.id.to_top)
         toTopBtn.setOnClickListener {
@@ -104,8 +115,6 @@ class MainActivity : AppCompatActivity() {
             mRecyclerView.smoothScrollToPosition(0)
         }
     }
-
-
 
     private fun displayToast(text: String) {
         if (mToast != null) {
@@ -195,6 +204,33 @@ class MainActivity : AppCompatActivity() {
             mAdapter.notifyDataSetChanged()
             isLoading = false
         }, 2000)
+    }
+
+    private fun fragmentInit() {
+        val mTabLayout: TabLayout = findViewById(R.id.tablayout)
+        val mViewPager: ViewPager = findViewById(R.id.viewpager)
+
+        val mFragments = listOf(HomeFragment(), TestFragment())
+        val mTitle = listOf("home", "test")
+        val mFragmentAdapter = FragmentAdapter(supportFragmentManager, mFragments, mTitle)
+
+        mViewPager.adapter = mFragmentAdapter
+        mTabLayout.setupWithViewPager(mViewPager)
+        mViewPager.setOnPageChangeListener(object: ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            }
+
+            override fun onPageSelected(position: Int) {
+                when(position) {
+                    0 -> displayToast("switch to Home")
+                    1 -> displayToast("switch to Test")
+                }
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+                //state的状态有三个，0还没开始，1正在滑动，2滑动完毕
+            }
+        })
     }
 }
 
