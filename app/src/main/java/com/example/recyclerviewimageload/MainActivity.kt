@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun fragmentInit() {
         val mTabLayout: TabLayout = findViewById(R.id.tab_layout)
-        val mViewPager: ViewPager = findViewById(R.id.viewpager)
+        val mViewPager: CustomViewPager = findViewById(R.id.viewpager)
 
         val mFragments = listOf(HomeFragment(), TestFragment())
         val mTitle = listOf("home", "test")

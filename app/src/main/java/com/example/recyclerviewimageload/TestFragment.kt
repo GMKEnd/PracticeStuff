@@ -58,16 +58,10 @@ class TestFragment: Fragment() {
 
     // 按钮初始化
     private fun btnInit() {
-        // 移到顶部
-        val toTopBtn: Button = mView.findViewById(R.id.to_top)
-        toTopBtn.setOnClickListener {
-            mRecyclerView.smoothScrollToPosition(0)
-        }
         // 添加头部
         val addHeaderBtn: Button = mView.findViewById(R.id.add_header)
         addHeaderBtn.setOnClickListener {
             mAdapter.addHeader()
-//            testList.add(0, "header")
             mAdapter.notifyItemInserted(0)
             mRecyclerView.layoutManager?.scrollToPosition(0)
         }
@@ -80,7 +74,6 @@ class TestFragment: Fragment() {
                 displayToast(toastText)
             } else {
                 mAdapter.removeHeader()
-//                testList.removeAt(0)
                 mAdapter.notifyItemRemoved(0)
             }
         }
@@ -88,7 +81,6 @@ class TestFragment: Fragment() {
         val addFooterBtn: Button = mView.findViewById(R.id.add_footer)
         addFooterBtn.setOnClickListener {
             mAdapter.addFooter()
-//            testList.add("footer")
             mAdapter.notifyItemInserted(mAdapter.itemCount - 1)
             mRecyclerView.layoutManager?.scrollToPosition(mAdapter.itemCount - 1)
         }
@@ -101,13 +93,12 @@ class TestFragment: Fragment() {
                 displayToast(toastText)
             } else {
                 mAdapter.removeFooter()
-//                testList.removeAt(testList.size - 1)
                 mAdapter.notifyItemRemoved(mAdapter.itemCount)
             }
         }
-
-        val eee:DragFloatActionButton = mView.findViewById(R.id.eee)
-        eee.setOnClickListener{
+        // 可移动按钮
+        val dragBtn:DragFloatActionButton = mView.findViewById(R.id.drag_btn)
+        dragBtn.setOnClickListener{
             mRecyclerView.smoothScrollToPosition(0)
         }
     }

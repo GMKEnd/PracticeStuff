@@ -18,22 +18,12 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <Button
-        android:id="@+id/to_top"
+        android:id="@+id/remove_footer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="5dp"
-        android:text="@string/return_to_top" />
-
-    <Button
-        android:id="@+id/remove_footer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/to_top"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="10dp"
         android:text="@string/remove_footer" />
 
     <Button
@@ -75,7 +65,7 @@
         android:layout_marginBottom="10dp">
 
         <com.example.recyclerviewimageload.DragFloatActionButton
-            android:id="@+id/eee"
+            android:id="@+id/drag_btn"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@drawable/__3png_com" />

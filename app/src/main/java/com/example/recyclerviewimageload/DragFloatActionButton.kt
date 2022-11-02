@@ -54,7 +54,7 @@ class DragFloatActionButton : AppCompatButton {
                     var y = y + dy
                     //检测是否到达边缘 左上右下
                     x = if (x < 0) 0F else if (x > parentWidth - width) (parentWidth - width).toFloat() else x
-                    y = if (getY() < 0) 0F else if (getY() + height > parentHeight) (parentHeight - height).toFloat() else y
+                    y = if (y < 0) 0F else if (y > parentHeight - height) (parentHeight - height).toFloat() else y
                     setX(x)
                     setY(y)
                     lastX = rawX
