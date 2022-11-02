@@ -1,16 +1,12 @@
 package com.example.recyclerviewimageload
 
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 
@@ -45,12 +41,12 @@ class MainActivity : AppCompatActivity() {
 
         mViewPager.adapter = mFragmentAdapter
         mTabLayout.setupWithViewPager(mViewPager)
-        mViewPager.setOnPageChangeListener(object: ViewPager.OnPageChangeListener {
+        mViewPager.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
             }
 
             override fun onPageSelected(position: Int) {
-                when(position) {
+                when (position) {
                     0 -> displayToast("switch to Home")
                     1 -> displayToast("switch to Test")
                 }
@@ -81,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                     // 检测发生滑动，最后一个完全可见的元素的位置是否为列表末尾
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == testList.size - 1 + mAdapter.getHeaderCount()) {
                         mAdapter.addFooter("上拉加载更多")
-                        mAdapter.notifyItemInserted(testList.size - 1  + mAdapter.getHeaderCount())
+                        mAdapter.notifyItemInserted(testList.size - 1 + mAdapter.getHeaderCount())
                         // 移动屏幕到能显示加载的位置
                         mRecyclerView.layoutManager?.scrollToPosition(testList.size - 1 + mAdapter.getHeaderCount())
                         refreshReady = true

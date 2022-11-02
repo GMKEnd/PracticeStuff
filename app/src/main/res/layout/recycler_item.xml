@@ -10,7 +10,7 @@
         android:id="@+id/image_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:contentDescription="@string/image_item" />
+        android:contentDescription="@string/image_item"
+        android:padding="8dp" />
 
 </androidx.cardview.widget.CardView>

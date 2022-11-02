@@ -7,9 +7,9 @@
         android:id="@+id/footer_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="20sp"
-        android:text="@string/footer"
         android:gravity="center"
-        android:textColor="#333" />
+        android:text="@string/footer"
+        android:textColor="#333"
+        android:textSize="20sp" />
 
 </FrameLayout>

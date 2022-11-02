@@ -7,9 +7,9 @@
         android:id="@+id/header_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="20sp"
-        android:text="@string/header"
         android:gravity="center"
-        android:textColor="#333" />
+        android:text="@string/header"
+        android:textColor="#333"
+        android:textSize="20sp" />
 
 </FrameLayout>

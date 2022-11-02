@@ -1,7 +1,6 @@
 package com.example.recyclerviewimageload
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,21 +28,25 @@ class Adapter(private val testList: List<String?>, context: Context) : RecyclerV
             TYPE_ITEM_TEXT -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.recycler_item_card, parent, false)
-                TextViewHolder(view) }
+                TextViewHolder(view)
+            }
             TYPE_ITEM_IMAGE -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.recycler_item, parent, false)
-                ImageViewHolder(view) }
+                ImageViewHolder(view)
+            }
             // header % footer
             TYPE_HEADER -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.header_view, parent, false)
 
-                HeaderViewHolder(view) }
+                HeaderViewHolder(view)
+            }
             TYPE_FOOTER -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.footer_view, parent, false)
-                FooterViewHolder(view) }
+                FooterViewHolder(view)
+            }
             // load
             else -> {
                 val view = LayoutInflater.from(parent.context)
@@ -131,7 +134,7 @@ class Adapter(private val testList: List<String?>, context: Context) : RecyclerV
         return mItemList.size + headerList.size + footerList.size
     }
 
-    class ImageViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val imageView: ImageView = itemView.findViewById(R.id.image_item)
 
         fun bind(position: Int) {
@@ -145,15 +148,15 @@ class Adapter(private val testList: List<String?>, context: Context) : RecyclerV
         }
     }
 
-    class TextViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class TextViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textView: TextView = itemView.findViewById(R.id.text_item)
 
-        fun bind (text: String) {
+        fun bind(text: String) {
             textView.text = text
         }
     }
 
-    class LoadViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class LoadViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val progressbar: ProgressBar = itemView.findViewById(R.id.progressBar)
 
         fun bind() {
@@ -161,14 +164,14 @@ class Adapter(private val testList: List<String?>, context: Context) : RecyclerV
         }
     }
 
-    class HeaderViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textView: TextView = itemView.findViewById(R.id.header_title)
         fun bind(position: Int) {
             textView.text = position.toString()
         }
     }
 
-    class FooterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class FooterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textView: TextView = itemView.findViewById(R.id.footer_title)
         fun bind(text: String) {
             textView.text = text
