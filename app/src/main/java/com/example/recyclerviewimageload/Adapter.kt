@@ -11,17 +11,17 @@ import androidx.recyclerview.widget.RecyclerView
 
 class Adapter(private val testList: List<String?>, context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    val TYPE_ITEM_IMAGE = 0
-    val TYPE_ITEM_TEXT = 1
-    val TYPE_ITEM_LOADING = 2
-    val mItemList = testList
-    val mContext = context
+    private val TYPE_ITEM_IMAGE = 0
+    private val TYPE_ITEM_TEXT = 1
+    private val TYPE_ITEM_LOADING = 2
 
-    val TYPE_HEADER = 10
-    val TYPE_FOOTER = 20
+    private val TYPE_HEADER = 10
+    private val TYPE_FOOTER = 20
 
-    val headerList = mutableListOf<String>()
-    val footerList = mutableListOf<String>()
+    private val mItemList = testList
+    private val mContext = context
+    private val headerList = mutableListOf<String>()
+    private val footerList = mutableListOf<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -39,7 +39,6 @@ class Adapter(private val testList: List<String?>, context: Context) : RecyclerV
             TYPE_HEADER -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.header_view, parent, false)
-
                 HeaderViewHolder(view)
             }
             TYPE_FOOTER -> {

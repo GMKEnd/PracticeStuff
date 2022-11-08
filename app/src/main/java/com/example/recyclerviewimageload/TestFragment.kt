@@ -115,7 +115,12 @@ class TestFragment : Fragment() {
         popupWindow.isTouchable = true
         popupWindow.setTouchInterceptor { _, _ -> false }
         popupWindow.setBackgroundDrawable(object : ColorDrawable(0x00000000) {})
-        popupWindow.showAsDropDown(view, 0, 0)
+
+        if (view.y < view.top / 2) {
+            popupWindow.showAsDropDown(view, -10, 0)
+        } else {
+            popupWindow.showAsDropDown(view, -10, -700)
+        }
 
         // 添加头部
         val addHeaderBtn: Button = nView.findViewById(R.id.add_header)
