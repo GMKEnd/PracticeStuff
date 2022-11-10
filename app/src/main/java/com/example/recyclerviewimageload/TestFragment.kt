@@ -2,6 +2,7 @@ package com.example.recyclerviewimageload
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
@@ -64,6 +65,7 @@ class TestFragment : Fragment() {
         val dragBtn: DragFloatActionButton = mView.findViewById(R.id.drag_btn)
         dragBtn.setOnClickListener {
             mRecyclerView.smoothScrollToPosition(0)
+            startActivity(Intent(context, InfoActivity::class.java))
         }
         // 浮窗按钮
         val popupBtn: DragFloatActionButtonV2 = mView.findViewById(R.id.popup_btn)
@@ -111,15 +113,15 @@ class TestFragment : Fragment() {
 
         val popupWindow = PopupWindow(nView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true)
         // 加载动画
-        popupWindow.animationStyle = R.anim.anim_pop
+        popupWindow.animationStyle = R.style.popup_anim
         popupWindow.isTouchable = true
         popupWindow.setTouchInterceptor { _, _ -> false }
         popupWindow.setBackgroundDrawable(object : ColorDrawable(0x00000000) {})
 
         if (view.y < view.top / 2) {
-            popupWindow.showAsDropDown(view, -10, 0)
+            popupWindow.showAsDropDown(view, 0, -25)
         } else {
-            popupWindow.showAsDropDown(view, -10, -700)
+            popupWindow.showAsDropDown(view, 0, -740)
         }
 
         // 添加头部
