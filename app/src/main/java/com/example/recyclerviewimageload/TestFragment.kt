@@ -2,7 +2,6 @@ package com.example.recyclerviewimageload
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
@@ -65,7 +64,6 @@ class TestFragment : Fragment() {
         val dragBtn: DragFloatActionButton = mView.findViewById(R.id.drag_btn)
         dragBtn.setOnClickListener {
             mRecyclerView.smoothScrollToPosition(0)
-            startActivity(Intent(context, InfoActivity::class.java))
         }
         // 浮窗按钮
         val popupBtn: DragFloatActionButtonV2 = mView.findViewById(R.id.popup_btn)
@@ -113,9 +111,18 @@ class TestFragment : Fragment() {
 
         val popupWindow = PopupWindow(nView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true)
         // 加载动画
-        popupWindow.animationStyle = R.style.popup_anim
+//        popupWindow.animationStyle = R.style.popup_anim
         popupWindow.isTouchable = true
-        popupWindow.setTouchInterceptor { _, _ -> false }
+        popupWindow.isOutsideTouchable = true
+/*        popupWindow.setTouchInterceptor (object : View.OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                if (event?.action == MotionEvent.ACTION_OUTSIDE) {
+                    popupWindow.dismiss()
+                    return false
+                }
+                return false
+            }
+        })*/
         popupWindow.setBackgroundDrawable(object : ColorDrawable(0x00000000) {})
 
         if (view.y < view.top / 2) {
