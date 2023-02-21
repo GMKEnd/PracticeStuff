@@ -35,8 +35,8 @@ class MainActivity : AppCompatActivity() {
         val mTabLayout: TabLayout = findViewById(R.id.tab_layout)
         val mViewPager: CustomViewPager = findViewById(R.id.viewpager)
 
-        val mFragments = listOf(HomeFragment(), TestFragment())
-        val mTitle = listOf("home", "test")
+        val mFragments = listOf(AdapterFragment(), HomeFragment(), TestFragment())
+        val mTitle = listOf("adapter", "home", "test")
         val mFragmentAdapter = FragmentAdapter(supportFragmentManager, mFragments, mTitle)
 
         mViewPager.adapter = mFragmentAdapter
@@ -47,8 +47,9 @@ class MainActivity : AppCompatActivity() {
 
             override fun onPageSelected(position: Int) {
                 when (position) {
-                    0 -> displayToast("switch to Home")
-                    1 -> displayToast("switch to Test")
+                    0 -> displayToast("switch to Adapter")
+                    1 -> displayToast("switch to Home")
+                    2 -> displayToast("switch to Test")
                 }
             }
 
