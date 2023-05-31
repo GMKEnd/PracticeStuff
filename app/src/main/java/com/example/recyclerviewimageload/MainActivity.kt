@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         fragmentInit()
-        // 初始化RV，添加OnScrollListener
+        // 初始化RV，添加OnScrollListener, 改动测试
 //        initRVScrollLoad()
     }
 
