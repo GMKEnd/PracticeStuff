@@ -16,7 +16,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var mAdapter: Adapter
     var testList = mutableListOf<String?>()
     var isLoading = false
-    var lastText = true
 
     companion object {
         var mToast: Toast? = null
